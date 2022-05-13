@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <title>API kadai to go list</title>
+    <meta charset="utf-8">
+    <style>body{padding:0;margin:0;background:#333;}h1{padding:0;margin:0;font-size:50%;color:white;}</style>
+</head>
+<body>
+<h1>API kadai to go list</h1>
+<div class = "wrapper" style='width:100%;height:1100px;display:flex'>
+    <div id="myMap" style='width:70%;height:70%'></div>
+    <div style="width:30%;height:70%;background-color:white;border:none">
+        <!-- <input type="file" id="upload" style="margin: 10px auto;align-items: center;">Excelアップロード</input> -->
+        <div class ="seiharitsu" style="font-size:30px;background-color: whitesmoke;border-radius:2px;margin:20px; text-align: center;">制覇率：●％（00/99) </div>
+        <ul id = "isan_list">
+        </ul>
+    </div>
+</div>
+
+<!-- [ EVENT Object ] https://msdn.microsoft.com/en-us/library/mt750279.aspx -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=****' async defer></script>
+<script>
+function GetMap() {
+    //Map:init
+    let map = new Microsoft.Maps.Map('#myMap', {
+        center: new Microsoft.Maps.Location(35.6590242, 139.7217861),
+        zoom: 5
+    });
+
+    //Pushpin:Colors
+    let defaultColor = 'blue';
+    let hoverColor = 'red';
+    let mouseDownColor = 'purple';
+
+
+    //Create a pushpin.
+    let isan_list01 = {number: '1', name: '法隆寺地域の仏教建造物', CorN: '文化遺産', lat: '34.614471', long: '135.7349'};
+    let isan_list02 = {number: '2', name: '姫路城', CorN: '文化遺産', lat: '34.837889', long: '134.69352'};
+    let isan_list03 = {number: '3', name: '屋久島', CorN: '自然遺産', lat: '30.3047965', long: '130.5751359'};
+    let isan_list04 = {number: '4', name: '白神山地', CorN: '自然遺産', lat: '40.4726931', long: '140.1265299'};
+    let isan_list05 = {number: '5', name: '古都京都の文化財', CorN: '文化遺産', lat: '35.059232', long: '135.75276'};
+    let isan_list06 = {number: '6', name: '白川郷・五箇山の合掌造り集落', CorN: '文化遺産', lat: '36.260426', long: '136.90652'};
+    let isan_list07 = {number: '7', name: '原爆ドーム', CorN: '文化遺産', lat: '34.395473', long: '132.45345'};
+    let isan_list08 = {number: '8', name: '厳島神社', CorN: '文化遺産', lat: '34.296432', long: '132.31922'};
+    let isan_list09 = {number: '9', name: '古都奈良の文化財', CorN: '文化遺産', lat: '34.688797', long: '135.84001'};
+    let isan_list010 = {number: '10', name: '日光の社寺', CorN: '文化遺産', lat: '36.757712', long: '139.59883'};
+    let isan_list011 = {number: '11', name: '琉球王国のグスク及び関連遺産群', CorN: '文化遺産', lat: '26.69151', long: '127.92963'};
+    let isan_list012 = {number: '12', name: '紀伊山地の霊場と参詣道', CorN: '文化遺産', lat: '34.359151', long: '135.86848'};
+    let isan_list013 = {number: '13', name: '知床', CorN: '自然遺産', lat: '44.1996', long: '145.2396'};
+    let isan_list014 = {number: '14', name: '石見銀山遺跡とその文化的景観', CorN: '文化遺産', lat: '35.112778', long: '132.435'};
+    let isan_list015 = {number: '15', name: '小笠原諸島', CorN: '自然遺産', lat: '27.071346', long: '142.2109771'};
+    let isan_list016 = {number: '16', name: '平泉', CorN: '文化遺産', lat: '38.998568', long: '141.10753'};
+    let isan_list017 = {number: '17', name: '富士山', CorN: '文化遺産', lat: '35.360625', long: '138.727363'};
+    let isan_list018 = {number: '18', name: '富岡製糸場と絹産業遺産群', CorN: '文化遺産', lat: '36.2553719', long: '138.8876371'};
+    let isan_list019 = {number: '19', name: '明治日本の産業革命遺産', CorN: '文化遺産', lat: '32.627738', long: '129.738364'};
+    let isan_list020 = {number: '20', name: 'ル・コルビュジエの建築作品', CorN: '文化遺産', lat: '35.7153915', long: '139.7758597'};
+    let isan_list021 = {number: '21', name: '「神宿る島」宗像・沖ノ島と関連遺産群', CorN: '文化遺産', lat: '34.244282', long: '130.105761'};
+    let isan_list022 = {number: '22', name: '長崎と天草地方の潜伏キリシタン関連遺産', CorN: '文化遺産', lat: '32.734044282662', long: '129.86904949574'};
+    let isan_list023 = {number: '23', name: '百舌鳥・古市古墳群', CorN: '文化遺産', lat: '34.5640543', long: '135.487547'};
+    let isan_list024 = {number: '24', name: '奄美大島、徳之島、沖縄島北部及び西表島', CorN: '自然遺産', lat: '28.3089048', long: '129.4080367'};
+    let isan_list025 = {number: '25', name: '北海道・北東北の縄文遺跡群', CorN: '文化遺産', lat: '40.811389', long: '140.696667'};
+
+    let array_number = [isan_list01.number, isan_list02.number, isan_list03.number, isan_list04.number, isan_list05.number, isan_list06.number, isan_list07.number, isan_list08.number, isan_list09.number, isan_list010.number, isan_list011.number, isan_list012.number, isan_list013.number, isan_list014.number, isan_list015.number, isan_list016.number, isan_list017.number, isan_list018.number, isan_list019.number, isan_list020.number, isan_list021.number, isan_list022.number, isan_list023.number, isan_list024.number, isan_list025.number]
+    let array_name = [isan_list01.name, isan_list02.name, isan_list03.name, isan_list04.name, isan_list05.name, isan_list06.name, isan_list07.name, isan_list08.name, isan_list09.name, isan_list010.name, isan_list011.name, isan_list012.name, isan_list013.name, isan_list014.name, isan_list015.name, isan_list016.name, isan_list017.name, isan_list018.name, isan_list019.name, isan_list020.name, isan_list021.name, isan_list022.name, isan_list023.name, isan_list024.name, isan_list025.name]
+    let array_CorN = [isan_list01.CorN, isan_list02.CorN, isan_list03.CorN, isan_list04.CorN, isan_list05.CorN, isan_list06.CorN, isan_list07.CorN, isan_list08.CorN, isan_list09.CorN, isan_list010.CorN, isan_list011.CorN, isan_list012.CorN, isan_list013.CorN, isan_list014.CorN, isan_list015.CorN, isan_list016.CorN, isan_list017.CorN, isan_list018.CorN, isan_list019.CorN, isan_list020.CorN, isan_list021.CorN, isan_list022.CorN, isan_list023.CorN, isan_list024.CorN, isan_list025.CorN]
+    let array_lat = [isan_list01.lat, isan_list02.lat, isan_list03.lat, isan_list04.lat, isan_list05.lat, isan_list06.lat, isan_list07.lat, isan_list08.lat, isan_list09.lat, isan_list010.lat, isan_list011.lat, isan_list012.lat, isan_list013.lat, isan_list014.lat, isan_list015.lat, isan_list016.lat, isan_list017.lat, isan_list018.lat, isan_list019.lat, isan_list020.lat, isan_list021.lat, isan_list022.lat, isan_list023.lat, isan_list024.lat, isan_list025.lat];
+    let array_long = [isan_list01.long, isan_list02.long, isan_list03.long, isan_list04.long, isan_list05.long, isan_list06.long, isan_list07.long, isan_list08.long, isan_list09.long, isan_list010.long, isan_list011.long, isan_list012.long, isan_list013.long, isan_list014.long, isan_list015.long, isan_list016.long, isan_list017.long, isan_list018.long, isan_list019.long, isan_list020.long, isan_list021.long, isan_list022.long, isan_list023.long, isan_list024.long, isan_list025.long];
+    var check = ["check01","check02","check03","check04","check05","check06","check07","check08","check09","check10","check11","check12","check13","check14","check15","check16","check17","check18","check19","check20","check21","check22","check23","check24","check25"];
+
+    for(i=0; i<array_number.length;i++){
+        console.log(array_number[i],array_lat[i],array_long[i]);
+        let lc_isan = new Microsoft.Maps.Location(array_lat[i], array_long[i])
+        let pin = new Microsoft.Maps.Pushpin(lc_isan, {
+            text: array_number[i],
+            // title: array_name[i],
+            // subTitle: array_CorN[i],
+            icon: 'https://www.bingmapsportal.com/Content/images/poi_custom.png' 
+        });
+        infobox = new Microsoft.Maps.Infobox(lc_isan, {
+            visible: false
+        });
+        //Assign the infobox to a map instance.
+        infobox.setMap(map);
+
+        pin.metadata = {
+            title:array_name[i],
+            description:array_CorN[i]
+        };
+        Microsoft.Maps.Events.addHandler(pin, 'click', pushpinClicked);
+        map.entities.push(pin); //Add pin to Map
+
+        function pushpinClicked(e) {
+        //Make sure the infobox has metadata to display.
+        if (e.target.metadata) {
+            //Set the infobox options with the metadata of the pushpin.
+            console.log(lc_isan,e.target.metadata.title,e.target.metadata.description);
+            infobox.setOptions({
+                location: lc_isan,
+                title: e.target.metadata.title,
+                description: e.target.metadata.description,
+                visible: true
+            });
+        }
+    }
+
+        // var add_contents = "<li>" + array_number[i] + " : " + array_name[i] + "</li>";
+        var add_contents = '<li><input type="checkbox" id="' + check[i] +'">' + array_number[i] + " : " + array_name[i] + '</li>';
+        console.log(add_contents);
+        $("#isan_list").append(add_contents);
+
+        //Event:mouseover
+        Microsoft.Maps.Events.addHandler(pin, 'mouseover', function (e) {
+            e.target.setOptions({color: hoverColor});
+        });
+        //Event:mousedown
+        Microsoft.Maps.Events.addHandler(pin, 'mousedown', function (e) {
+            e.target.setOptions({color: mouseDownColor});
+        });
+        //Event:mouseout
+        Microsoft.Maps.Events.addHandler(pin, 'mouseout', function (e) {
+            e.target.setOptions({color: defaultColor});
+        });
+    }
+
+
+
+    $(function() {
+        $('input:checkbox').change(function() {
+            var cnt = $('#isan_list input:checkbox:checked').length;
+            var max = array_number.length
+            var seiha = cnt/max*100
+            // console.log(cnt,max,seiha);
+            $('.seiharitsu').text('制覇率：' + seiha.toFixed(1) + '%（' + cnt + '/' + max +')' );
+        }).trigger('change');
+    });
+
+    // const input = document.getElementById('upload');
+    //   //FileReaderの定義
+    //   const reader = new FileReader();
+    //   input.addEventListener('change', (e) => {
+    //     const file = e.target.files[0];
+    //     //ファイルの種類を絞る
+    //     if (file.type === 'text/csv') {
+    //       reader.onload = () => {
+    //         console.log(reader.result);
+    //       }
+    //       reader.readAsText(file);
+    //     }
+    
+    //     reader.addEventListener('load', () => {
+    //         let data_array = [];
+    //         const data_string = reader.result.split('\n')
+    //         for (let i = 0; i < data_string.length; i++) {
+    //         data_array[i] = data_string[i].split(',');
+    //         }
+    //         console.log(data_array);
+    //         // draw_table(data_array);
+    //     });
+    // })
+};
+
+</script>
+</body>
+</html>
